@@ -41,8 +41,7 @@ class bmpReader():
                 n = self.arrOffset + ((self.pixelHeight - 1 - i) * self.paddedWidth) + j
                 v = self.byteArray[n]
                 self.pixelArray.append(v)
-    def showBmp(self):
-        mainwindow = tkinter.Tk()
+
                 
                 
 
