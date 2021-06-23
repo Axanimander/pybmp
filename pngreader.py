@@ -28,7 +28,8 @@ class pngReader:
             "gAMA" : self.read_gAMA,
         }
     def readChunk(self, chunk_type, offset):
-        self.chunks.get(chunk_type, lambda a:f'Unsupported Chunk Type: {a}')(offset)
+        return 0
+        #self.chunks.get(chunk_type, lambda a:f'Unsupported Chunk Type: {a}')(offset)
     # Read the Header chunk   
     def read_IHDR(self): 
         return 0
@@ -48,7 +49,7 @@ class pngReader:
     def read_gAMA(self):
         return 0
     def get_header_string(self):
-        self.header_string = ''.join(list(map(chr, self.byte_array[12:16])))
+        self.header_string = self.byte_array[12:16]
     def end(self):
         self.file.close()
 

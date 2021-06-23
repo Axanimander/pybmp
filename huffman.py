@@ -24,6 +24,7 @@ class Node(object):
     right = None
     item = None
     weight = 0
+    decodedict = {}
     def __init__(self, symbol, weight, l=None, r=None):
         self.symbol = symbol
         self.weight = weight
@@ -65,6 +66,7 @@ class HuffmanEncoder:
             self.queue.sort(key=sortByWeight)
         self.code = {}
         self.preorder_traversal(self.queue[0])
+        self.decodedict = dict((value, key) for key, value in self.code.items())
 
         encoded = ""
         for symbol in data:
@@ -78,6 +80,18 @@ class HuffmanEncoder:
         li.sort()
         for c in li:
             print(c[1] + " : " + c[2])
+    def decode(self, encodedbits):
+        bits = ''
+        decoded = ''
+        for b in encodedbits:
+            bits = bits + b
+            #print(bits)
+            if(bits in self.decodedict):
+                decoded = decoded + self.decodedict[bits]
+                bits = ''
+        return decoded
+
+
 
     
 
