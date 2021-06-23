@@ -1,4 +1,4 @@
-from heapq import heappush, heappop
+from bitops import *
 from collections import Counter
 
 def get_weights(data):
@@ -42,7 +42,7 @@ class HuffmanEncoder:
         self.symbols = {}
         for symbol in self.data:
             self.symbols[symbol] = self.symbols.get(symbol, 0) + 1
-    def preorder_traversal(self, node, path=""):
+    def preorder_traversal(self, node, path=''):
         if node.left == None:
             self.code[node.symbol] = path
         else:
@@ -50,6 +50,7 @@ class HuffmanEncoder:
             self.preorder_traversal(node.right, path + "1")
 
     def build_tree(self, data):
+        """Build a Huffman tree with whatever set of frequency data you want, in string form"""
         self.data = data
         self.get_frequency()
         
@@ -67,6 +68,9 @@ class HuffmanEncoder:
         self.code = {}
         self.preorder_traversal(self.queue[0])
         self.decodedict = dict((value, key) for key, value in self.code.items())
+        self.decodedictbits = dict((int(value,2), key) for key, value in self.code.items())
+    def encode(self, data):
+        """Encode bits using the previously generated encoding dictionary"""
 
         encoded = ""
         for symbol in data:
@@ -85,11 +89,28 @@ class HuffmanEncoder:
         decoded = ''
         for b in encodedbits:
             bits = bits + b
-            #print(bits)
             if(bits in self.decodedict):
                 decoded = decoded + self.decodedict[bits]
                 bits = ''
         return decoded
+    def decode_bits(self, encodedbits):
+        binary_rep = int(encodedbits[::-1], 2)
+        offset = 0
+        b = ''
+        decoded = ''
+        while(offset < len(encodedbits)):
+            b = b + str(binary_rep & 1)
+            binary_rep = binary_rep >> 1
+            offset += 1
+            if(b in self.decodedict):
+                decoded = decoded + self.decodedict[b]
+                b = ''
+        return decoded
+z = HuffmanEncoder()
+z.build_tree(s)
+t = z.encode(s)
+m = z.decode(t)
+f = z.decode_bits(t)
 
 
 
