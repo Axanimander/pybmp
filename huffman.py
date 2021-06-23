@@ -106,11 +106,8 @@ class HuffmanEncoder:
                 decoded = decoded + self.decodedict[b]
                 b = ''
         return decoded
-z = HuffmanEncoder()
-z.build_tree(s)
-t = z.encode(s)
-m = z.decode(t)
-f = z.decode_bits(t)
+
+# TODO: implement actual raw byte compression
 
 
 
