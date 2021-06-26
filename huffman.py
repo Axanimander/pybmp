@@ -38,6 +38,8 @@ class HuffmanEncoder:
         self.code = {}
         self.queue = []
         self.data = ""
+        self.decodedict = {}
+        self.decodedictbits = {}
     def get_frequency(self):
         self.symbols = {}
         for symbol in self.data:
